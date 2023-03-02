@@ -3,5 +3,5 @@
 
 applist=('newpip' 'termux''netguard')
 
-export applist
-./app-dl.sh
+#export applist
+#./app-dl.sh
