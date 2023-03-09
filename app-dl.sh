@@ -9,19 +9,25 @@ main(){
 	while [[ "$qsignal" != "close" ]]
 	do
 		echo ":: Download which apk?: "
-		echo ">> Newpipe[1] | Termux[2] | Quit[[q]"
+		#echo ">> Newpipe[1] | Termux[2] | Quit[[q]"
+		echo ">>[0,1,2,3...] | Quit[[q]"
+		sleep 1
+		
+
+		for i in ${applist[@]}
+		do		
+			echo ">> ${i}"
+		done
+
 		read opt
-
-		case $opt in 
-
-			1) dlto $opt ;;
-			2) dlto $opt ;;
-			3) dlto $opt ;;
-			q) echo "<-- Exiting"
-			   qsignal="close"
-			   ;;
-			*) echo "X> No such option found: ${opt}"
-		esac
+		
+		if [[ $opt == "q" ]]
+		then
+			echo "<-- Exiting"
+			qsignal="close"
+		else
+			dlto $opt
+		fi
 	done
 }
 
@@ -33,31 +39,17 @@ dlto() {
 
 	cd /data/data/com.termux/files/home/storage/shared/Download/
 	
-	if [[ "$opt" -eq 1 ]]
-	then
-		wget $applist[0]
-		echo "!> done"
-	elif [[ "$opt" -eq 2 ]]
-	then
-		wget $applist[1]
-		echo "!> done"
-
-	elif [[ "$opt" -eq 3 ]]
-	then
-		wget $applist[2]
-		echo "!> done"
-	fi
-
+	wget $applist[$opt]
 }
 
 # add urls in arry separated by a space 
-# and singel quats around urls.
+# and singel qouts around urls.
 
 applist=(
-	'https://github.com/TeamNewPipe/releases/download/v0.24.1/NewPipe_v0.24.1.apk' 
-	'termux'
+	'https://github.com/TeamNewPipe/releases/download/v0.24.1/NewPipe_v0.24.1.apk'
+	'https://github.com/Termux/releases/download/v0.11.0.8/Termux_v0.11.0.8.apk'
+	'https://github.com/Termux/releases/download/v0.11.0.8/Termux_v0.11.0.8.apk'
+
 )
-
-
 
 main
